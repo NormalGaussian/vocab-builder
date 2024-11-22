@@ -7,11 +7,12 @@ from random import sample
 from random import choice
 
 
-#Checks to see if a given word has a url associated
-#Checks to see if a given word has vocab_types associated
-#Generates a new word if not
-
 def check_correct():
+    """
+    Checks to see if a given word has a url associated
+    Checks to see if a given word has vocab_types associated
+    Generates a new word if not
+    """
 
     answer = choice(list(clean_vocab))
 
@@ -32,7 +33,9 @@ def vocab_choices():
     misdirect_vocab = check_correct()
 
     while len(vocab_selection) < 3:
-        if answer_type in list(word_types(misdirect_vocab)):
+        types = word_types(misdirect_vocab)
+        l_word_types = list(types)
+        if answer_type in l_word_types:
             vocab_selection.append(misdirect_vocab)
         misdirect_vocab = check_correct()
 
