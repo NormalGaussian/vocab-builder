@@ -34,6 +34,12 @@ def vocab_choices():
 
     while len(vocab_selection) < 3:
         types = word_types(misdirect_vocab)
+        
+        # Handle an edge case, which is likely a bug elsewhere.
+        if types == None:
+            misdirect_vocab = check_correct()
+            continue
+
         l_word_types = list(types)
         if answer_type in l_word_types:
             vocab_selection.append(misdirect_vocab)
