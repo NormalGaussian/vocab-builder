@@ -5,7 +5,7 @@ from get_defs import extract_defs
 
 from random import sample
 from random import choice
-
+from set_choose import setChoice
 
 def check_correct():
     """
@@ -14,10 +14,10 @@ def check_correct():
     Generates a new word if not
     """
 
-    answer = choice(list(clean_vocab))
+    answer = setChoice(clean_vocab)
 
     while word_types(answer) == None:
-        answer = choice(list(clean_vocab))
+        answer = setChoice(clean_vocab)
         
     return answer
  
