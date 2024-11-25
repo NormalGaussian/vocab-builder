@@ -18,4 +18,4 @@ def rmv_non_charac(word):
 unclean_vocab = sorted({words.lower() for words in content if " " not in words}) #issue here: as single words with spaces excluded
 clean_vocab = {rmv_non_charac(word) for word in unclean_vocab}
 
-#print("This is clean_vocab: ", clean_vocab)
+
