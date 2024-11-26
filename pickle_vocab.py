@@ -36,17 +36,51 @@ def generate_user_defs(user_vocab):
     return vocab_defs, unknown_vocab
 
 
+#Function which creates a dictionary storing all words according
+#to type (verb/noun etc.) for quick lookup in-game
+
+def generate_wrd_types(user_vocab):
+
+    vocab_types = {'noun': [], 'pronoun': [], 'verb': [], 'adjective': [], 'adverb': [], 'preposition': []}
+    no_types_fnd = []
+
+    for vocab in list(user_vocab):
+
+        vocab_forms = word_types(vocab)
+
+        if vocab_forms == None:
+            no_types_fnd.append(vocab)
+            continue
+
+        else:
+
+            for each_type in vocab_forms:
+                    
+                try:
+                    vocab_types[each_type].append(vocab)
+
+                except KeyError:
+                    print(f"{vocab} has {each_type} type which is currently unsupported")
+                    pass
+
+    print("No vocab types found for these words:", no_types_fnd)
+    return vocab_types
+
+
+
 #Create/overwrite to pickle
 #Takes in a location name(str) and something to be stored(any obj)
 def pickle_vocab(location, gherkins):
     with open(location, 'wb') as file:
         pickle.dump(gherkins, file)
 
+
 #add without overriding
-#requires mulitple load statements 
+#requires mulitple load statements to unpick
 def append_to_pickle(location, gherkins):
     with open(location, 'ab') as file:
         pickle.dump(gherkins, file)
+
 
 #Returns all objects that have been pickled
 def unpickle_vocab(location):
@@ -62,4 +96,5 @@ def unpickle_vocab(location):
     return pickle_obj
 
 
-
+#pickle_vocab('vocab_by_type.pickle', generate_wrd_types(clean_vocab))
+#print(unpickle_vocab('vocab_by_type.pickle'))
