@@ -1,21 +1,48 @@
 import os.path
 
-
 filename = "kindle_highlights.txt"
 
+
+#checks file exists
 if not os.path.isfile(filename):
-    print('File does not exist.')
-    quit()
-else:
-    with open(filename) as f:
-        content = f.read().splitlines()
+    raise Exception('File does not exist.')
 
+
+#checks file is of supported type (.txt only at present)
+if filename.endswith('.txt'):
+    pass
+else:  
+    raise Exception("user_vocab parsing curently unsupported file type")
+
+    
+with open(filename) as f:
+
+    content = f.read().splitlines()
+
+#removes any characters that are not letters ('abc')
 def rmv_non_charac(word):
+
     edited_word = [character for character in word if ord(character) in range (97, 123)]
-    if len("".join(edited_word)) > 0:
-        return "".join(edited_word) 
-
-unclean_vocab = sorted({words.lower() for words in content if " " not in words}) #issue here: as single words with spaces excluded
-clean_vocab = {rmv_non_charac(word) for word in unclean_vocab}
+    only_characters = "".join(edited_word) 
+    if len(only_characters) > 0:
+        return only_characters
 
 
+clean_vocab = set()
+for line in content:
+
+    # Removes any leading or trailing whitespace
+    line = line.strip()
+
+    if " " in line:
+        # Skip any lines that contain spaces, as they are probably not single words
+        continue
+
+    # sanitizes the word by removing any non-alphabetic characters and converting to lowercase
+    word = rmv_non_charac(line.lower())
+
+    if word is not None:
+        clean_vocab.add(word)
+
+
+print(clean_vocab)

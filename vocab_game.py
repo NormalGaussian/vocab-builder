@@ -32,7 +32,8 @@ def vocab_choices():
     misdirect_vocab = check_correct()
 
     while len(vocab_selection) < 3:
-        if answer_type in list(word_types(misdirect_vocab)):
+        if (answer_type in list(word_types(misdirect_vocab)) and 
+                misdirect_vocab not in vocab_selection):
             vocab_selection.append(misdirect_vocab)
         misdirect_vocab = check_correct()
 
