@@ -45,4 +45,3 @@ for line in content:
         clean_vocab.add(word)
 
 
-print(clean_vocab)

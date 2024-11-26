@@ -74,6 +74,3 @@ def extract_defs(word, vocab_type = None):
                     all_defs.append(spec_defs['definition'])
         if len(all_defs) > 0:
             return all_defs
-
-
-print(extract_defs('nascent', 'adjective'))
