@@ -96,5 +96,3 @@ def unpickle_vocab(location):
     return pickle_obj
 
 
-#pickle_vocab('vocab_by_type.pickle', generate_wrd_types(clean_vocab))
-#print(unpickle_vocab('vocab_by_type.pickle'))

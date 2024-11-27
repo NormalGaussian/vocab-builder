@@ -2,6 +2,9 @@ import random
 from typing import TypeVar, Set
 T = TypeVar('T')
 
+
+#To note - the index reference is not constant
+#due to set
 def setChoice(s: Set[T]) -> T | None:
     if len(s) == 0:
         return None
