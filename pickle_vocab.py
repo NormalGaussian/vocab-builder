@@ -32,8 +32,8 @@ def generate_user_defs(user_vocab):
             defin_by_type[word_type] = extract_defs(vocab, word_type)
             vocab_defs[vocab] = defin_by_type
 
-
-    return vocab_defs, unknown_vocab
+    print("No vocab definitions found for these words:", unknown_vocab)
+    return vocab_defs
 
 
 #Function which creates a dictionary storing all words according
@@ -96,3 +96,15 @@ def unpickle_vocab(location):
     return pickle_obj
 
 
+def create_pickles():
+
+    print("Pickling has begun.")
+    try:
+        pickle_vocab("known_vocab.pickle", generate_user_defs(clean_vocab))
+        pickle_vocab("vocab_by_type.pickle", generate_wrd_types(clean_vocab))
+    except:
+        print("Error occurred when trying to create files <known_vocab.pickle> and <vocab_by_type.pickle>")
+        print("Please inform the manufacturer. Have a pleasant day.")
+        quit()
+
+    print("Pickling complete")

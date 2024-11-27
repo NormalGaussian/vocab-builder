@@ -43,7 +43,7 @@ def word_types(word):
         return None
     
     else:
-        print(f"Non-index error raised in word_types for {word}.")
+        print(f"Non-index error raised in word_types for {word}. Likely cause: api has no definitions.")
                     
 
 #Returns a list of all definitions for a given word OR definitions

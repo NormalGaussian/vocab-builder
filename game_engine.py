@@ -2,19 +2,27 @@ from random import choice
 from textwrap import dedent
 from random import sample
 from time import sleep
+import os.path
 
 #from user_input import user_choice
+from pickle_vocab import create_pickles
 from pickle_vocab import unpickle_vocab
 from set_choose import setChoice
 from set_choose import setChooseN
 from user_input import check_response
 from user_input import check_input
 
+user_vocab_file = "known_vocab.pickle"
+user_bytype_file = "vocab_by_type.pickle"
 
 
+if not os.path.isfile(user_vocab_file) or not os.path.isfile(user_bytype_file):
+    create_pickles()
 
-usr_vocab_def = (unpickle_vocab('known_vocab.pickle')[0])
-usr_vocab_type = (unpickle_vocab('vocab_by_type.pickle')[0])
+
+usr_vocab_def = (unpickle_vocab(user_vocab_file)[0])
+usr_vocab_type = (unpickle_vocab(user_bytype_file)[0])
+
 
 
 #This will likely be useful later on when trying to specify
@@ -109,6 +117,8 @@ def start():
     
     print("Congratulations. You are a scholar!")
     quit()
+
+
 
 print("\n   #####Welcome player!#####")
 sleep(2)
