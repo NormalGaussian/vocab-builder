@@ -2,9 +2,10 @@ from random import choice
 from textwrap import dedent
 from random import sample
 from time import sleep
+from typing import TypeVar, Set
 import os.path
 
-#from user_input import user_choice
+# from user_input import user_choice
 from pickle_vocab import create_pickles
 from pickle_vocab import unpickle_vocab
 from set_choose import setChoice
@@ -25,9 +26,9 @@ usr_vocab_type = (unpickle_vocab(user_bytype_file)[0])
 
 
 
-#This will likely be useful later on when trying to specify
-#which words are to be trained (words that have been
-#incorrect more often in previous games etc.)
+# This will likely be useful later on when trying to specify
+# which words are to be trained (words that have been
+# incorrect more often in previous games etc.)
 
 def choose_from_correct(vocab_by_word: dict, vocab_by_type: dict):
 
@@ -83,6 +84,9 @@ def start():
 
     while player_score < 5:
 
+        sleep(1)
+        os.system('cls' if os.name == 'nt' else 'clear')
+
         print(f"Your score is currently {player_score}. You require 5 points to leave and continue with your life...")
         
         answer, answer_type, vocab_selection = choice_by_type(usr_vocab_type)
@@ -90,8 +94,9 @@ def start():
 
         print("\nTo which of the following options does this definition pertain?")
 
+        count = 1
         for option in vocab_selection:
-            print("     ", option)
+            print(f"    {count}.)", option)
 
         user_input = input("\nPlease enter an integer from 1 - 4\n>>> ")
         evaluation = check_input(user_input)
@@ -100,7 +105,7 @@ def start():
             continue
         
 
-        #Without defining a range of acceptable types, a 0 indexes to list's end
+        # Without defining a range of acceptable types, a 0 indexes to list's end
         if answer == vocab_selection[int(user_input) -1]:
             print("Excellent - you are correct!")
             player_score +=1

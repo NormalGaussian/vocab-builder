@@ -10,8 +10,8 @@ from get_defs import extract_defs
 # relevant definitions
 
 
-#Any words that were not found to have any types, either due to no url,
-#no word found at url, or api limit reached etc
+# Any words that were not found to have any types, either due to no url,
+# no word found at url, or api limit reached etc
 
 
 def generate_user_defs(user_vocab):
@@ -36,8 +36,8 @@ def generate_user_defs(user_vocab):
     return vocab_defs
 
 
-#Function which creates a dictionary storing all words according
-#to type (verb/noun etc.) for quick lookup in-game
+# Function which creates a dictionary storing all words according
+# to type (verb/noun etc.) for quick lookup in-game
 
 def generate_wrd_types(user_vocab):
 
@@ -68,21 +68,21 @@ def generate_wrd_types(user_vocab):
 
 
 
-#Create/overwrite to pickle
-#Takes in a location name(str) and something to be stored(any obj)
+# Create/overwrite to pickle
+# Takes in a location name(str) and something to be stored(any obj)
 def pickle_vocab(location, gherkins):
     with open(location, 'wb') as file:
         pickle.dump(gherkins, file)
 
 
-#add without overriding
-#requires mulitple load statements to unpick
+# add without overriding
+# requires mulitple load statements to unpick
 def append_to_pickle(location, gherkins):
     with open(location, 'ab') as file:
         pickle.dump(gherkins, file)
 
 
-#Returns all objects that have been pickled
+# Returns all objects that have been pickled
 def unpickle_vocab(location):
 
     pickle_obj = []
