@@ -20,7 +20,7 @@ with open(filename) as f:
     content = f.read().splitlines()
 
 #removes any characters that are not letters ('abc')
-def rmv_non_charac(word):
+def remove_non_alpha_characters(word):
 
     edited_word = [character for character in word if ord(character) in range (97, 123)]
     only_characters = "".join(edited_word) 
