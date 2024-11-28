@@ -97,11 +97,12 @@ def start():
         count = 1
         for option in vocab_selection:
             print(f"    {count}.)", option)
+            count +=1
 
         user_input = input("\nPlease enter an integer from 1 - 4\n>>> ")
         evaluation = check_input(user_input)
 
-        if evaluation == None:
+        if evaluation == False:
             continue
         
 
@@ -115,6 +116,7 @@ def start():
             wrong +=1
             conc_wrong +=1
             print(f"\nFor shame... The correct answer was: {answer}")
+            sleep(1)
             check_response(wrong, conc_wrong)
 
 
@@ -126,5 +128,5 @@ def start():
 
 
 print("\n   #####Welcome player!#####")
-sleep(2)
+sleep(1)
 start()

@@ -8,11 +8,13 @@ T = TypeVar('T')
 def setChoice(s: Set[T]) -> T | None:
     """
     Chooses a single element at random from a set.
-    When given the empty set returns None.
+    When given the empty set raises exception.
     When given a non-empty set always returns a value.
+    To note: the index reference is not constant due to 
+    use of set.
     """
     if len(s) == 0:
-        return None
+        raise Exception("setChoice was asked to choose from a set with no length.")
     index = random.randint(0, len(s) - 1)
     p = 0
     for i in s:

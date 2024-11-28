@@ -24,7 +24,7 @@ def generate_user_defs(user_vocab):
         defin_by_type = dict({})
         vocab_types = word_types(vocab)
 
-        if vocab_types == None:
+        if vocab_types == False:
             unknown_vocab.append(vocab)
             continue
         
@@ -48,7 +48,7 @@ def generate_wrd_types(user_vocab):
 
         vocab_forms = word_types(vocab)
 
-        if vocab_forms == None:
+        if vocab_forms == False:
             no_types_fnd.append(vocab)
             continue
 

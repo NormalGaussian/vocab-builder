@@ -7,7 +7,7 @@ savage1 = {"ducky": "Has feathers and goes quack quack", "red": "The colour your
 
 def check_input(user_input):
 
-    evaluation = None
+    evaluation = False
 
     try:
         int(user_input)

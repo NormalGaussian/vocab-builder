@@ -5,14 +5,14 @@ filename = "kindle_highlights.txt"
 
 #checks file exists
 if not os.path.isfile(filename):
-    raise Exception('File does not exist.')
+    raise Exception(f"Cannot process {filename}; it either does not exist or is not a file.")
 
 
 #checks file is of supported type (.txt only at present)
 if filename.endswith('.txt'):
     pass
 else:  
-    raise Exception("user_vocab parsing curently unsupported file type")
+    raise Exception("user_vocab given unsupported file type. Only kindle highlights (.txt) currently parsed.")
 
     
 with open(filename) as f:
@@ -26,6 +26,7 @@ def remove_non_alpha_characters(word):
     only_characters = "".join(edited_word) 
     if len(only_characters) > 0:
         return only_characters
+    return False
 
 
 clean_vocab = set()
@@ -39,9 +40,9 @@ for line in content:
         continue
 
     # sanitizes the word by removing any non-alphabetic characters and converting to lowercase
-    word = rmv_non_charac(line.lower())
+    word = remove_non_alpha_characters(line.lower())
 
-    if word is not None:
+    if word is not False:
         clean_vocab.add(word)
 
 
