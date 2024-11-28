@@ -18,8 +18,16 @@ def generate_user_defs(user_vocab):
 
     vocab_defs = dict({})
     unknown_vocab = []
+    iterations = 0
+    print("Now creating pickle file 1 of 2")
 
     for vocab in list(user_vocab):
+
+        iterations += 1
+        input_length = len(user_vocab)
+
+        if iterations % 10 == 0:
+            print(f"{iterations} of {input_length} words now processed")
 
         defin_by_type = dict({})
         vocab_types = word_types(vocab)
@@ -43,8 +51,16 @@ def generate_wrd_types(user_vocab):
 
     vocab_types = {'noun': [], 'pronoun': [], 'verb': [], 'adjective': [], 'adverb': [], 'preposition': []}
     no_types_fnd = []
+    iterations = 0
+    print("Now creating pickle file 2 of 2")
 
     for vocab in list(user_vocab):
+
+        iterations += 1
+        input_length = len(user_vocab)
+
+        if iterations % 10 == 0:
+            print(f"{iterations} of {input_length} words now processed")
 
         vocab_forms = word_types(vocab)
 

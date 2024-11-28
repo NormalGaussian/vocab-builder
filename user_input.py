@@ -18,7 +18,7 @@ def check_input(user_input):
         sleep(2)
         print("Integers 1 - 4 only.")
         sleep(2)
-        print("Let's try again shall we...")
+        print("Let's another one shall we...")
         sleep(2)
         return evaluation
     

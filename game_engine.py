@@ -26,11 +26,10 @@ usr_vocab_type = (unpickle_vocab(user_bytype_file)[0])
 
 
 
-# This will likely be useful later on when trying to specify
-# which words are to be trained (words that have been
-# incorrect more often in previous games etc.)
-
 def choose_from_correct(vocab_by_word: dict, vocab_by_type: dict):
+
+    """ Not currently utilised. Resolves sampling error caused by smaller
+    sets of vocab types (e.g. fewer pronouns samples as often as adjectives) """
 
     answer = setChoice(vocab_by_word)
     vocab_selection = set()
@@ -53,11 +52,13 @@ def choose_from_correct(vocab_by_word: dict, vocab_by_type: dict):
     return answer, answer_type, vocab_selection
 
 
-# Current default selection based on a sample from a
-# random vocab type (one of many issues being unrepresentative
-# sampling from rarer word types)
+
 
 def choice_by_type(vocab_by_type: dict):
+
+    """ Current default selection based on a sample from a
+    random vocab type (one of many issues being unrepresentative
+    sampling from rarer word types) """
     
     vocab_selection = None
     answer_type = setChoice(vocab_by_type)

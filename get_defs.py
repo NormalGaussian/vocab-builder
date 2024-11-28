@@ -5,7 +5,7 @@ from user_vocab import clean_vocab
 def lookup_word(word: str) -> list:
     
     trial = 0
-    time.sleep(0.5)  #0.4 sleep with 2 attempts has had best results
+    time.sleep(0.3)  #0.3 sleep with 2 attempts has been reliable
 
     while trial < 2:
 
@@ -18,12 +18,12 @@ def lookup_word(word: str) -> list:
                     return data  
             else:
                 trial +=1
-                raise Exception(f"non-200 status code returned for {word}: {response.status_code}")
-            
-
+               
         except Exception:
-            print(f"No response status code given for {word}'s url")
+            print(f"No response status code given for {word}'s url after 2 attempts")
             return False
+        
+        return False
     
 
 def word_types(word):
@@ -42,8 +42,8 @@ def word_types(word):
         if len((word_types)) > 0:
             return word_types
 
-    else:
-        print("Should never run.")
+    # returns False whem api exists but no definitions found
+    return False
                     
 
 
@@ -66,10 +66,9 @@ def extract_defs(word, vocab_type = None):
 
         if len(all_defs) > 0:
             return all_defs
-        print(f"No definitions of type {vocab_type} found for {word}")
         return False
     
-    #Returns all definiitions of all types
+    # Returns all definiitions of all types
     elif api_result != False:
         for items in api_result:
             for mean_items in items['meanings']:
@@ -78,6 +77,5 @@ def extract_defs(word, vocab_type = None):
         if len(all_defs) > 0:
             return all_defs
         else:
-            print("No definitions of any type found for {word}")
             return False
 
