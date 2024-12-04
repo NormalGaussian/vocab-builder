@@ -2,6 +2,7 @@ from random import choice
 from textwrap import dedent
 from random import sample
 from time import sleep
+from colorama import Fore, Back, Style
 import sys
 import os
 
@@ -13,18 +14,32 @@ from responses_to_user import answer_not_valid
 user_vocab_file = "known_vocab.pickle"
 user_bytype_file = "vocab_by_type.pickle"
 
-user_vocab_dict = (unpickle_vocab(user_vocab_file)[0])
-user_bytype_dict = (unpickle_vocab(user_bytype_file)[0])
+working_vocab_dict = (unpickle_vocab(user_vocab_file)[0])
+working_bytype_dict = (unpickle_vocab(user_bytype_file)[0])
 
 
+# Stores the current state of the players dictionary.
+# Removes words they have got right several times.
+# Can also be checked to see quantities of word types available.
 
-def check_option_quant():
+
+def check_option_quant(word_type):
     """
     Not implemented. Could be used to check the quantity of vocab options each time
     a question is asked to determine whether the game can still be played. This can
     later be coupled with something that removes answers that are correct.
     """
-    return True
+""" 
+    # Here is where I need to check the numbers of vocab types available.
+    while True:
+        answer_type = setChoice(definitions_by_vocab[answer])
+        if len(vocab_by_type[answer_type]) < 4:
+            continue
+        else:
+            print("This is len(vocab_by_type[answer_type]): ", len(vocab_by_type[answer_type]))
+            break
+ """
+
 
 def get_player_input(humiliation = None):
 
@@ -73,12 +88,28 @@ def choose_from_answer(humiliation = None):
     optional param.
     """
 
-    definitions_by_vocab = user_vocab_dict
-    vocab_by_type = user_bytype_dict
+    definitions_by_vocab = working_vocab_dict
+    vocab_by_type = working_bytype_dict
 
-    answer = setChoice(definitions_by_vocab)
     vocab_selection = set()
-    answer_type = setChoice(definitions_by_vocab[answer])
+
+    attempts = 0
+
+    while attempts < 3:
+        answer = setChoice(definitions_by_vocab)
+        attempts +=1
+        for type_option in definitions_by_vocab[answer]:
+            if len(vocab_by_type[type_option]) < 4:
+                pass
+            else:
+                answer_type = type_option
+                break
+        break
+
+    if attempts == 3:
+        print("You have insufficient vocabulary to play the game.")
+        sleep(1)
+        quit()
 
     # Is this random enough?
     vocab_selection.add(answer) 
@@ -105,7 +136,8 @@ def generate_question():
 
     while True:
 
-        print(f"\n\"{answer_definition}\"")
+        print(Fore.YELLOW + f"\n\"{answer_definition}\"")
+        print(Style.RESET_ALL)
         print("\nWhich of the following words pertain to this definition?\n")
         sleep(0.5)
 
@@ -122,11 +154,13 @@ def generate_question():
 
 
     if answer == vocab_selection[player_input -1]:
-        print("\nCorrect!")
+        print(Fore.GREEN + "\nCorrect!")
+        print(Style.RESET_ALL)
         sleep(1.5)
         return True
     else:
-        print("\nYou have failed! Bow your head in shame.")
+        print(Fore.RED + "\nYou have failed! Bow your head in shame.")
+        print(Style.RESET_ALL)
         sleep(1)
         print(f"The correct answer was: {answer}")
         sleep(2)
