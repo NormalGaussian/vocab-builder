@@ -4,18 +4,17 @@ from user_vocab import clean_vocab
 from get_defs import word_types
 from get_defs import extract_defs
 
-# Takes in a list of single string words
-# Returns a dictionary of found vocab, with dictionaries for each 
-# found word_type (verb, noun etc) containing a list of all
-# relevant definitions
-
-
-# Any words that were not found to have any types, either due to no url,
-# no word found at url, or api limit reached etc
-
 
 def generate_user_defs(user_vocab):
-
+    """
+    Takes in a list of single string words
+    Returns a dictionary of found vocab, with dictionaries for each 
+    found word_type (verb, noun etc) containing a list of all
+    relevant definitions. Any words that were not found to have any
+    types, either due to no url, no word found at url, or api limit
+    reached etc.   
+    
+    """
     vocab_defs = dict({})
     unknown_vocab = []
     iterations = 0
@@ -44,10 +43,13 @@ def generate_user_defs(user_vocab):
     return vocab_defs
 
 
-# Function which creates a dictionary storing all words according
-# to type (verb/noun etc.) for quick lookup in-game
 
 def generate_wrd_types(user_vocab):
+
+    """
+    Creates a dictionary storing all words according
+    to type (verb/noun etc.) for quick lookup in-game
+    """
 
     vocab_types = {'noun': [], 'pronoun': [], 'verb': [], 'adjective': [], 'adverb': [], 'preposition': []}
     no_types_fnd = []
@@ -84,22 +86,32 @@ def generate_wrd_types(user_vocab):
 
 
 
-# Create/overwrite to pickle
-# Takes in a location name(str) and something to be stored(any obj)
+
 def pickle_vocab(location, gherkins):
+    """
+    Create/overwrite to pickle. Takes in a location name(str) and
+    something to be stored(any obj)
+    """
     with open(location, 'wb') as file:
         pickle.dump(gherkins, file)
 
 
-# add without overriding
-# requires mulitple load statements to unpick
+
 def append_to_pickle(location, gherkins):
+    """
+    Add to pickle without overwriting. Uses mulitple load
+    statements to unpickle.
+    """
+
     with open(location, 'ab') as file:
         pickle.dump(gherkins, file)
 
 
-# Returns all objects that have been pickled
+
 def unpickle_vocab(location):
+    """
+    Returns all objects that have been pickled.
+    """
 
     pickle_obj = []
 
@@ -113,6 +125,12 @@ def unpickle_vocab(location):
 
 
 def create_pickles():
+
+    """
+    Creates and writes 2 new pickle files. Stores 1 dict in each.
+    "known_vocab.pickle" stores definitions by each words type
+    "vocab_by_type.pickle" stores words only, according to type
+    """
 
     print("Pickling has begun.")
     try:

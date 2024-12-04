@@ -6,3 +6,4 @@ test.py
 test_input.txt
 *.pickle
 test2.py
+fake_stream.py

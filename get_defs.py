@@ -5,7 +5,7 @@ from user_vocab import clean_vocab
 def lookup_word(word: str) -> list:
     
     trial = 0
-    time.sleep(0.3)  #0.3 sleep with 2 attempts has been reliable
+    time.sleep(0.3)  # 0.3 sleep with 2 attempts has been reliable
 
     while trial < 2:
 
@@ -28,7 +28,8 @@ def lookup_word(word: str) -> list:
 
 def word_types(word):
     
-    """Returns a set of all found vocab types for a given word from 
+    """
+    Returns a set of all found vocab types for a given word from 
     api (e.g. {"verb", "noun"})
     """
 
@@ -49,9 +50,11 @@ def word_types(word):
 
 def extract_defs(word, vocab_type = None):
 
-    """ Returns a list of all definitions for a given word OR 
+    """
+    Returns a list of all definitions for a given word OR 
     all definitions specific to a word type for a given word
-    (e.g. noun) """
+    (e.g. noun)
+    """
 
     all_defs = []
     api_result = lookup_word(word)

@@ -3,12 +3,12 @@ import os.path
 filename = "kindle_highlights.txt"
 
 
-#checks file exists
+# checks file exists
 if not os.path.isfile(filename):
     raise Exception(f"Cannot process {filename}; it either does not exist or is not a file.")
 
 
-#checks file is of supported type (.txt only at present)
+# checks file is of supported type (.txt only at present)
 if filename.endswith('.txt'):
     pass
 else:  
@@ -19,7 +19,7 @@ with open(filename) as f:
 
     content = f.read().splitlines()
 
-#removes any characters that are not letters ('abc')
+# removes any characters that are not letters ('abc')
 def remove_non_alpha_characters(word):
 
     edited_word = [character for character in word if ord(character) in range (97, 123)]
