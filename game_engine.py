@@ -2,19 +2,18 @@ from random import choice
 from time import sleep
 import os.path
 
-# from user_input import user_choice
 from pickle_vocab import create_pickles
-from gen_game_choices import generate_question
 from responses_to_user import check_response
-
 
 user_vocab_file = "known_vocab.pickle"
 user_bytype_file = "vocab_by_type.pickle"
 
-
 # Create pickle files of dicts if either of them are not found
 if not os.path.isfile(user_vocab_file) or not os.path.isfile(user_bytype_file):
     create_pickles()
+
+
+from gen_game_choices import generate_question
 
 
    

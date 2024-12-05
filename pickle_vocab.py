@@ -51,8 +51,8 @@ def generate_wrd_types(user_vocab):
     to type (verb/noun etc.) for quick lookup in-game
     """
 
-    vocab_types = {'noun': [], 'pronoun': [], 'verb': [], 'adjective': [], 'adverb': [], 'preposition': []}
-    no_types_fnd = []
+    vocab_by_types = {'noun': {}, 'pronoun': {}, 'verb': {}, 'adjective': {}, 'adverb': {}, 'preposition': {}}
+    no_types_found = []
     iterations = 0
     print("Now creating pickle file 2 of 2")
 
@@ -67,7 +67,7 @@ def generate_wrd_types(user_vocab):
         vocab_forms = word_types(vocab)
 
         if vocab_forms == False:
-            no_types_fnd.append(vocab)
+            no_types_found.append(vocab)
             continue
 
         else:
@@ -75,17 +75,15 @@ def generate_wrd_types(user_vocab):
             for each_type in vocab_forms:
                     
                 try:
-                    vocab_types[each_type].append(vocab)
-
+                    vocab_by_types[each_type][vocab] = {}
+                    vocab_by_types[each_type][vocab]["concurrent_correct"] = 0
+                    vocab_by_types[each_type][vocab]["concurrent_wrong"] = 0
+                
                 except KeyError:
                     print(f"{vocab} has {each_type} type which is currently unsupported")
                     pass
 
-    print("No vocab types found for these words:", no_types_fnd)
-    return vocab_types
-
-
-
+    return vocab_by_types
 
 def pickle_vocab(location, gherkins):
     """

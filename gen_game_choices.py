@@ -19,9 +19,21 @@ working_vocab_dict = (unpickle_vocab(user_vocab_file)[0])
 working_bytype_dict = (unpickle_vocab(user_bytype_file)[0])
 
 
-# Stores the current state of the players dictionary.
-# Removes words they have got right several times.
-# Can also be checked to see quantities of word types available.
+def update_correct(word, word_type):
+
+    """
+    Locates the word in working by_type. Either creates a dictionary entry for the word
+    storing concurrect_correct or adds 1. If conc_correct == 3, player is given
+    the option to remove the word from their working, testable vocab.
+    """
+
+    try:
+        (working_bytype_dict[word_type][word]["conc_correct"]) +=1
+    except TypeError:
+        working_bytype_dict[word_type][word].append({"conc_correct" : 1})
+
+    print("This is entry for nascent: ", working_bytype_dict[word_type][word])
+
 
 
 def get_player_input(humiliation = None):
@@ -99,7 +111,7 @@ def choose_from_answer(humiliation = None):
     vocab_selection.add(answer) 
       
     while len(vocab_selection) < 4:
-        vocab_selection.add(choice(vocab_by_type[answer_type]))
+        vocab_selection.add(setChoice(vocab_by_type[answer_type]))
     
 
     answer_definition = choice(definitions_by_vocab[answer][answer_type])
@@ -174,4 +186,3 @@ def choice_by_type(vocab_by_type: dict):
     answer = choice(vocab_selection)
     
     return answer, answer_type, vocab_selection
-

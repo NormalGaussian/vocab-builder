@@ -17,7 +17,7 @@ def answer_not_valid(user_input):
     
     except ValueError:
 
-        print("Regardless of your verbal intellect player, you seem to be struggling with basic maths.")
+        print("Regardless of your verbal intellect player, you seem to be struggling basic counting...")
         sleep(1)
         print("Let's try again shall we...")
         sleep(1)
