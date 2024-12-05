@@ -29,9 +29,6 @@ def start():
     consecutive_incorrect_answers = 0
 
     while player_score < 5:
-
-        was_wrong = False
-
         os.system('cls' if os.name == 'nt' else 'clear')
         print(f"Your score is {player_score} and you require 5 points to continue with your life.")
         
@@ -41,10 +38,6 @@ def start():
         else:
             total_incorrect_answers +=1
             consecutive_incorrect_answers +=1
-            was_wrong = True
-
-        # Generate print statements if needed based on stats
-        if was_wrong == True:
             check_response(total_incorrect_answers, consecutive_incorrect_answers)
 
 

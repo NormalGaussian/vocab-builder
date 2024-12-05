@@ -2,7 +2,6 @@ from time import sleep
 
 
 def answer_not_valid(user_input):
-
     """
     Provides only a text response if invalid input detected from player.
     """
