@@ -1,9 +1,4 @@
-from textwrap import dedent
 from time import sleep
-from random import choice
-
-savage1 = {"ducky": "Has feathers and goes quack quack", "red": "The colour your face should be", "cup": "sippy sippy", "feeble": "An assessment of your mental prowess..."}
-
 
 
 def answer_not_valid(user_input):
