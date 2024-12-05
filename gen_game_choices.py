@@ -19,39 +19,22 @@ working_vocab_dict = (unpickle_vocab(user_vocab_file)[0])
 working_bytype_dict = (unpickle_vocab(user_bytype_file)[0])
 
 
-def update_correct(word, word_type):
-
-    """
-    Locates the word in working by_type. Either creates a dictionary entry for the word
-    storing concurrect_correct or adds 1. If conc_correct == 3, player is given
-    the option to remove the word from their working, testable vocab.
-    """
-
-    try:
-        (working_bytype_dict[word_type][word]["conc_correct"]) +=1
-    except TypeError:
-        working_bytype_dict[word_type][word].append({"conc_correct" : 1})
-
-    print("This is entry for nascent: ", working_bytype_dict[word_type][word])
+def clear_standard_in():
+    if os.name == 'nt':  # For Windows, use msvcrt
+        import msvcrt
+        while msvcrt.kbhit():
+            msvcrt.getch()
+    else:  # For Unix-like systems
+        sys.stdin.read()
 
 
-
-def get_player_input(humiliation = None):
+def get_player_answer(humiliation = None):
 
     """
     Default request for input - which calls a seperate function which evaluates
     the user input and checks validity (i.e. is string 1-4 or something else).
     Also contains a nested function which clears standard in.
     """
-
-    def clear_standard_in():
-        if os.name == 'nt':  # For Windows, use msvcrt
-            import msvcrt
-            while msvcrt.kbhit():
-                msvcrt.getch()
-        else:  # For Unix-like systems
-            sys.stdin.read()
-
 
     print("\nPlease enter an integer from 1 - 4")
         
@@ -70,7 +53,44 @@ def get_player_input(humiliation = None):
     except ValueError:
         answer_not_valid(user_input)
         return False
-    
+
+
+def update_correct(word, word_type):
+
+    """
+    Finds a particular word_defs concurrect_correct count and add 1. 
+    If conc_correct == 3, player is given the option to remove 
+    the word from their working, testable vocab.
+    """
+    working_bytype_dict[word_type][word]["concurrent_correct"] +=1
+
+    if working_bytype_dict[word_type][word]["concurrent_correct"] == 3:
+        print(f"\nYou seem to have mastered the {word_type} definition for {word}.")
+        print("Would you like to remove this from your working vocab library?\n")
+
+        for option in ["     1.) Yes", "     2.) No"]:
+            print(option)
+        print("\nPlease press integer 1 or 2 to proceed ")
+        clear_standard_in()
+        user_input = input(">>> ")
+
+        if user_input == "1":
+            del working_bytype_dict[word_type][word]
+            print("This has now been removed from your working vocab list.")
+        elif user_input == "2":
+            working_bytype_dict[word_type][word]["concurrent_correct"] = 1
+            print("Understood. This word will remain.")
+
+
+def update_wrong(word, word_type):
+
+    """
+    Finds a particular word_defs concurrect_wrong count and adds 1. 
+    Not currently utilised elsewhere. Possible future use for
+    creating personalised game difficulties.
+    """
+    working_bytype_dict[word_type][word]["concurrent_wrong"] +=1
+
 
 
 def choose_from_answer(humiliation = None):
@@ -116,7 +136,7 @@ def choose_from_answer(humiliation = None):
 
     answer_definition = choice(definitions_by_vocab[answer][answer_type])
                                                                                                                                                                                                                                                                                           
-    return answer, answer_definition, list(vocab_selection)    
+    return answer, answer_type, answer_definition, list(vocab_selection)    
 
 
 
@@ -128,7 +148,7 @@ def generate_question():
     user input.
     """
 
-    answer, answer_definition, vocab_selection = choose_from_answer()
+    answer, answer_type, answer_definition, vocab_selection = choose_from_answer()
 
     while True:
 
@@ -142,7 +162,7 @@ def generate_question():
             print(f"   {count}.) {option}")
             count +=1
 
-        player_input = get_player_input()
+        player_input = get_player_answer()
         if player_input != False:
             break
 
@@ -152,11 +172,13 @@ def generate_question():
     if answer == vocab_selection[player_input -1]:
         print(Fore.GREEN + "\nCorrect!")
         print(Style.RESET_ALL)
+        update_correct(answer, answer_type) # Updates the concurrent correct guesses for this definition
         sleep(1)
         return True
     else:
         print(Fore.RED + "\nYou have failed! Bow your head in shame.")
         print(Style.RESET_ALL)
+        update_wrong(answer, answer_type)
         sleep(1)
         print("The correct answer was:", Fore.YELLOW + f"{answer}")
         print(Style.RESET_ALL)

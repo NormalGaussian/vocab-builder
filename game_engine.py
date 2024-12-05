@@ -53,6 +53,6 @@ def start():
     quit()
 
 
-print("\n   #####Welcome player!#####")
+print("\n   #####  Welcome player!  #####")
 sleep(1)
 start()
