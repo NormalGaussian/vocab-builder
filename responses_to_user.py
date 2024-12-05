@@ -30,8 +30,7 @@ def answer_not_valid(user_input):
 
 
 
-def check_response(total_incorrect_answers, consecutive_incorrect_answers):
-
+def berate_user_for_incorrect_answer(total_incorrect_answers, consecutive_incorrect_answers):
     """
     Provides text response to player based on their stats.
     """

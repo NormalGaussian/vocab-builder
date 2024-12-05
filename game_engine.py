@@ -5,7 +5,7 @@ import os.path
 # from user_input import user_choice
 from pickle_vocab import create_pickles
 from gen_game_choices import generate_and_ask_question
-from responses_to_user import check_response
+from responses_to_user import berate_user_for_incorrect_answer
 
 
 user_vocab_file = "known_vocab.pickle"
@@ -38,8 +38,7 @@ def start():
         else:
             total_incorrect_answers +=1
             consecutive_incorrect_answers +=1
-            check_response(total_incorrect_answers, consecutive_incorrect_answers)
-
+            berate_user_for_incorrect_answer(total_incorrect_answers, consecutive_incorrect_answers)
 
     print("Congratulations! You are a scholar and a Gentle(person)")
     sleep(2)
