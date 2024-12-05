@@ -40,8 +40,8 @@ def get_player_input(humiliation = None):
             while msvcrt.kbhit():
                 msvcrt.getch()
         else:  # For Unix-like systems
-            sys.stdin.read()
-
+            import sys, termios
+            termios.tcflush(sys.stdin, termios.TCIFLUSH)
 
     print("\nPlease enter an integer from 1 - 4")
         
