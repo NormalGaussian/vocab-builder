@@ -34,18 +34,18 @@ def get_player_input(humiliation = None):
     Also contains a nested function which clears standard in.
     """
 
-    def clear_standard_in():
+    def clear_stdin():
         if os.name == 'nt':  # For Windows, use msvcrt
             import msvcrt
             while msvcrt.kbhit():
                 msvcrt.getch()
         else:  # For Unix-like systems
-            sys.stdin.read()
-
+            import sys, termios
+            termios.tcflush(sys.stdin, termios.TCIFLUSH)
 
     print("\nPlease enter an integer from 1 - 4")
         
-    clear_standard_in()
+    clear_stdin()
     user_input = input(">>> ")
 
     try:
