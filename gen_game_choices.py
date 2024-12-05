@@ -123,7 +123,7 @@ def generate_question():
         print(Fore.YELLOW + f"\n\"{answer_definition}\"")
         print(Style.RESET_ALL)
         print("\nWhich of the following words pertain to this definition?\n")
-        sleep(0.5)
+
 
         count = 1
         for option in vocab_selection:
@@ -140,14 +140,15 @@ def generate_question():
     if answer == vocab_selection[player_input -1]:
         print(Fore.GREEN + "\nCorrect!")
         print(Style.RESET_ALL)
-        sleep(1.5)
+        sleep(1)
         return True
     else:
         print(Fore.RED + "\nYou have failed! Bow your head in shame.")
         print(Style.RESET_ALL)
         sleep(1)
-        print(f"The correct answer was: {answer}")
-        sleep(2)
+        print("The correct answer was:", Fore.YELLOW + f"{answer}")
+        print(Style.RESET_ALL)
+        sleep(1)
         return False
 
 
