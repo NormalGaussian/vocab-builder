@@ -11,6 +11,7 @@ from pickle_vocab import unpickle_vocab
 from set_choose import setChoice
 from set_choose import setChooseN
 from responses_to_user import answer_not_valid
+
 user_vocab_file = "known_vocab.pickle"
 user_bytype_file = "vocab_by_type.pickle"
 
@@ -21,24 +22,6 @@ working_bytype_dict = (unpickle_vocab(user_bytype_file)[0])
 # Stores the current state of the players dictionary.
 # Removes words they have got right several times.
 # Can also be checked to see quantities of word types available.
-
-
-def check_option_quant(word_type):
-    """
-    Not implemented. Could be used to check the quantity of vocab options each time
-    a question is asked to determine whether the game can still be played. This can
-    later be coupled with something that removes answers that are correct.
-    """
-""" 
-    # Here is where I need to check the numbers of vocab types available.
-    while True:
-        answer_type = setChoice(definitions_by_vocab[answer])
-        if len(vocab_by_type[answer_type]) < 4:
-            continue
-        else:
-            print("This is len(vocab_by_type[answer_type]): ", len(vocab_by_type[answer_type]))
-            break
- """
 
 
 def get_player_input(humiliation = None):
@@ -107,7 +90,8 @@ def choose_from_answer(humiliation = None):
         break
 
     if attempts == 3:
-        print("You have insufficient vocabulary to play the game.")
+        print("At present, you have insufficient vocabulary and/or variety of word types to play the game.")
+        print("Feel free to include more vocabulary for the game to utilise.")
         sleep(1)
         quit()
 
