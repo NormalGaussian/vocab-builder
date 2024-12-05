@@ -26,7 +26,7 @@ def start():
 
     player_score = 0
     wrong = False
-    concurrent_wrong = 0
+    consecutive_incorrect_answers = 0
 
     while player_score < 5:
 
@@ -38,15 +38,15 @@ def start():
         # Generates a question and return a state/true or false, and new player stats
         if generate_question() == True:
             player_score +=1
-            concurrent_wrong = 0
+            consecutive_incorrect_answers = 0
         else:
             wrong +=1
-            concurrent_wrong +=1
+            consecutive_incorrect_answers +=1
             was_wrong = True
 
         # Generate print statements if needed based on stats
         if was_wrong == True:
-            check_response(wrong, concurrent_wrong)
+            check_response(wrong, consecutive_incorrect_answers)
 
 
     print("Congratulations! You are a scholar and a Gentle(person)")
