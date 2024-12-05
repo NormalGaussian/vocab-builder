@@ -4,7 +4,7 @@ import os.path
 
 # from user_input import user_choice
 from pickle_vocab import create_pickles
-from gen_game_choices import generate_question
+from gen_game_choices import generate_and_ask_question
 from responses_to_user import check_response
 
 
@@ -35,8 +35,7 @@ def start():
         os.system('cls' if os.name == 'nt' else 'clear')
         print(f"Your score is {player_score} and you require 5 points to continue with your life.")
         
-        # Generates a question and return a state/true or false, and new player stats
-        if generate_question() == True:
+        if generate_and_ask_question() == True:
             player_score +=1
             consecutive_incorrect_answers = 0
         else:
