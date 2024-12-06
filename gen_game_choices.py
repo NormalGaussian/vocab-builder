@@ -97,9 +97,9 @@ def update_correct(word, word_type):
     working_bytype_dict[word_type][word]["concurrent_correct"] +=1
     working_bytype_dict[word_type][word]["concurrent_wrong"] = 0
 
-    while True:
-
-        if working_bytype_dict[word_type][word]["concurrent_correct"] > 3:
+    if working_bytype_dict[word_type][word]["concurrent_correct"] > 2:  
+        
+        while True:
 
             print(f"\nYou seem to have mastered the {word_type} definition for {word}.")
             print("Would you like to remove this from your working vocab library?\n")
@@ -124,7 +124,6 @@ def update_correct(word, word_type):
             else:
                 print("I didn't catch that user. Please try again")
                 sleep(1)
-                continue
 
 
 def update_wrong(word, word_type):

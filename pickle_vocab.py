@@ -1,4 +1,5 @@
 import pickle
+from time import sleep
 
 from user_vocab import clean_vocab
 from get_defs import word_types
@@ -40,6 +41,8 @@ def generate_user_defs(user_vocab):
             vocab_defs[vocab] = defin_by_type
 
     print("No vocab definitions found for these words:", unknown_vocab)
+    print("These are all the words not found for pickle 1:", len(unknown_vocab))
+    sleep(10)
     return vocab_defs
 
 
@@ -82,6 +85,9 @@ def generate_wrd_types(user_vocab):
                 except KeyError:
                     print(f"{vocab} has {each_type} type which is currently unsupported")
                     pass
+
+    print("These are all the words not found for pickle 2:", len(no_types_found))
+    sleep(10)
 
     return vocab_by_types
 
@@ -126,7 +132,7 @@ def create_pickles():
     """
     Creates and writes 2 new pickle files. Stores 1 dict in each.
     "known_vocab.pickle" stores definitions by each words type
-    "vocab_by_type.pickle" stores words only, according to type
+    "working_vocab.pickle" stores words only, according to type
     """
 
     print("Pickling has begun.")
