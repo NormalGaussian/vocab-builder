@@ -20,6 +20,7 @@ working_bytype_dict = (unpickle_vocab(user_bytype_file)[0])
 
 
 def clear_stdin():
+
     if os.name == 'nt':  # For Windows, use msvcrt
         import msvcrt
         while msvcrt.kbhit():
@@ -31,6 +32,10 @@ def clear_stdin():
 
 def player_save_choice():
 
+    """
+    Option to save the current game state and concurrent wrong/correct
+    answers for a future playthrough. Updates working_vocab.picle
+    """
 
     while True:
         print("Would you like to save your progress for the next playthrough?")
