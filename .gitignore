@@ -1,0 +1,9 @@
+description.txt
+*.json
+git_notes.txt
+__pycache__
+test.py
+test_input.txt
+*.pickle
+test2.py
+fake_stream.py
