@@ -6,26 +6,53 @@ from colorama import Fore, Back, Style
 import sys
 import os
 
-
+from pickle_vocab import pickle_vocab
 from pickle_vocab import unpickle_vocab
 from set_choose import setChoice
 from set_choose import setChooseN
 from responses_to_user import answer_not_valid
 
 user_vocab_file = "known_vocab.pickle"
-user_bytype_file = "vocab_by_type.pickle"
+user_bytype_file = "working_vocab.pickle"
 
 working_vocab_dict = (unpickle_vocab(user_vocab_file)[0])
 working_bytype_dict = (unpickle_vocab(user_bytype_file)[0])
 
 
-def clear_standard_in():
+def clear_stdin():
     if os.name == 'nt':  # For Windows, use msvcrt
         import msvcrt
         while msvcrt.kbhit():
             msvcrt.getch()
     else:  # For Unix-like systems
-        sys.stdin.read()
+        import sys, termios
+        termios.tcflush(sys.stdin, termios.TCIFLUSH)
+
+
+def player_save_choice():
+
+
+    while True:
+        print("Would you like to save your progress for the next playthrough?")
+
+        for option in ["     1.) Yes", "     2.) No"]:
+            print(option)
+        print("\nPlease press integer 1 or 2 to proceed ")
+        clear_stdin()
+        user_input = input(">>> ")
+
+        if user_input == "1":
+            pickle_vocab("working_vocab.pickle", working_bytype_dict)
+            print("Great. Your progress has been saved.")
+            return
+        elif user_input == "2":
+            print("Understood. Your next game will ignore this sessions progress.")
+            return
+        else:
+            print("I didn't catch that user. Please try again")
+            sleep(1)
+            continue
+    
 
 
 def get_player_answer(humiliation = None):
@@ -35,15 +62,6 @@ def get_player_answer(humiliation = None):
     the user input and checks validity (i.e. is string 1-4 or something else).
     Also contains a nested function which clears standard in.
     """
-
-    def clear_stdin():
-        if os.name == 'nt':  # For Windows, use msvcrt
-            import msvcrt
-            while msvcrt.kbhit():
-                msvcrt.getch()
-        else:  # For Unix-like systems
-            import sys, termios
-            termios.tcflush(sys.stdin, termios.TCIFLUSH)
 
     print("\nPlease enter an integer from 1 - 4")
         
@@ -72,23 +90,36 @@ def update_correct(word, word_type):
     the word from their working, testable vocab.
     """
     working_bytype_dict[word_type][word]["concurrent_correct"] +=1
+    working_bytype_dict[word_type][word]["concurrent_wrong"] = 0
 
-    if working_bytype_dict[word_type][word]["concurrent_correct"] == 3:
-        print(f"\nYou seem to have mastered the {word_type} definition for {word}.")
-        print("Would you like to remove this from your working vocab library?\n")
+    while True:
 
-        for option in ["     1.) Yes", "     2.) No"]:
-            print(option)
-        print("\nPlease press integer 1 or 2 to proceed ")
-        clear_standard_in()
-        user_input = input(">>> ")
+        if working_bytype_dict[word_type][word]["concurrent_correct"] > 3:
 
-        if user_input == "1":
-            del working_bytype_dict[word_type][word]
-            print("This has now been removed from your working vocab list.")
-        elif user_input == "2":
-            working_bytype_dict[word_type][word]["concurrent_correct"] = 1
-            print("Understood. This word will remain.")
+            print(f"\nYou seem to have mastered the {word_type} definition for {word}.")
+            print("Would you like to remove this from your working vocab library?\n")
+
+            for option in ["     1.) Yes", "     2.) No"]:
+                print(option)
+
+            print("\nPlease press integer 1 or 2 to proceed ")
+            clear_stdin()
+            user_input = input(">>> ")
+
+            if user_input == "1":
+                del working_bytype_dict[word_type][word]
+                print("This has now been removed from your working vocab list.")
+                return
+            
+            elif user_input == "2":
+                working_bytype_dict[word_type][word]["concurrent_correct"] = 1
+                print("Understood. This word will remain.")
+                return
+            
+            else:
+                print("I didn't catch that user. Please try again")
+                sleep(1)
+                continue
 
 
 def update_wrong(word, word_type):
@@ -99,6 +130,7 @@ def update_wrong(word, word_type):
     creating personalised game difficulties.
     """
     working_bytype_dict[word_type][word]["concurrent_wrong"] +=1
+    working_bytype_dict[word_type][word]["concurrent_correct"] = 0
 
 
 

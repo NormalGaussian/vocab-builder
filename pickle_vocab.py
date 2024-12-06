@@ -97,8 +97,7 @@ def pickle_vocab(location, gherkins):
 
 def append_to_pickle(location, gherkins):
     """
-    Add to pickle without overwriting. Uses mulitple load
-    statements to unpickle.
+    Add to pickle without overwriting.
     """
 
     with open(location, 'ab') as file:
@@ -133,7 +132,7 @@ def create_pickles():
     print("Pickling has begun.")
     try:
         pickle_vocab("known_vocab.pickle", generate_user_defs(clean_vocab))
-        pickle_vocab("vocab_by_type.pickle", generate_wrd_types(clean_vocab))
+        pickle_vocab("working_vocab.pickle", generate_wrd_types(clean_vocab))
     except:
         print("Error occurred when trying to create files <known_vocab.pickle> and <vocab_by_type.pickle>")
         print("Please inform the manufacturer. Have a pleasant day.")
