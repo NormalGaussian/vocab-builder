@@ -1,26 +1,37 @@
-import requests
+import urllib.request
 import time
-from user_vocab import clean_vocab
+import json
 
-def lookup_word(word: str) -> list:
-    
+def lookup_word(word: str, interRequestDelay: float = 0.3, attempts: int = 2) -> list:
+    print(f"Looking up word '{word}'")
+
+    url = f"https://api.dictionaryapi.dev/api/v2/entries/en/{word}"
+    headers = {
+        "User-Agent": "VocabBuilder/1.0 (python)"
+    }
+    method = 'GET'
+
+    request = urllib.request.Request(url, headers=headers, method=method)
+
     trial = 0
-    time.sleep(0.3)  # 0.3 sleep with 2 attempts has been reliable
-
-    while trial < 2:
-
+    while trial < attempts:
         try:
-            url = f"https://api.dictionaryapi.dev/api/v2/entries/en/{word}"
-            response = requests.get(url)
-
-            if response.status_code == 200:
-                    data = response.json()
-                    return data  
-            else:
+            time.sleep(interRequestDelay)  # 0.3 sleep with 2 attempts has been reliable
+            print(f"Attempt {trial+1} to connect to API to lookup '{word}'")
+            with urllib.request.urlopen(request) as response:
+                if response.status == 200:
+                    data = json.load(response)
+                    return data
+                
+                else:
+                    # This was a successful request; but it didn't return a 200
+                    print(f"Did not get a 200 when looking up '{word}': {response.status}")
+                
                 trial +=1
                
-        except Exception:
-            print(f"No response status code given for {word}'s url after 2 attempts")
+        except Exception as e:
+            # Likely either the request failed (4xx, 5xx) or the json parsing failed
+            print(f"Failed to lookup word '{word}': {e}")
             return False
         
         return False
