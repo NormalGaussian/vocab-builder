@@ -139,8 +139,8 @@ def create_pickles():
     try:
         pickle_vocab("known_vocab.pickle", generate_user_defs(clean_vocab))
         pickle_vocab("working_vocab.pickle", generate_wrd_types(clean_vocab))
-    except:
-        print("Error occurred when trying to create files <known_vocab.pickle> and <vocab_by_type.pickle>")
+    except Exception as e:
+        print(f"Error occurred when trying to create files <known_vocab.pickle> and <vocab_by_type.pickle>: {e}")
         print("Please inform the manufacturer. Have a pleasant day.")
         quit()
 
